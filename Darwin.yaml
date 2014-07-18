@@ -1,0 +1,78 @@
+---
+classes:
+  - managedmac
+  - profile::mcx_profile::wifi
+  - profile::mac_settings::google_nosslsearch
+  - profile::mac_settings::ipv6off
+  - profile::mac_settings::wifi_proxy
+profile::mcx_profile::wifi::ssid: "WifiSSID"
+profile::mcx_profile::wifi::password: "password"
+profile::mac_settings::wifi_proxy::autoproxyurl: "http://proxy/proxy.pac"
+profile::mac_settings::google_nosslsearch::nosslsearch_ip_address: "216.239.32.20"
+managedmac::organization: "My Organization"
+managedmac::loginwindow::loginwindow_text: "This %{::sp_machine_name} is the property of My Organization...."
+managedmac::loginwindow::hide_admin_users: true
+managedmac::loginwindow::hide_local_users: true
+managedmac::ntp::enable: true
+managedmac::ntp::servers:
+ - time.apple.com
+ - time1.google.com
+managedmac::mcx::suppress_icloud_setup: true
+managedmac::mcx::hidden_preference_panes:
+  - com.apple.preferences.icloud
+managedmac::remotemanagement::enable: true
+managedmac::remotemanagement::users:
+  locad: -1073741569
+managedmac::remotemanagement::enable_menu_extra: false
+managedmac::security::ask_for_password: true
+managedmac::security::ask_for_password_delay: 600
+managedmac::security::disable_autologin: true
+managedmac::security::gatekeeper_enable_assessment: false
+managedmac::softwareupdate::automatic_update_check: false
+managedmac::softwareupdate::auto_update_apps: false
+managedmac::softwareupdate::automatic_download: false
+managedmac::softwareupdate::config_data_install: false
+managedmac::softwareupdate::critical_update_install: false
+managedmac::authorization::allow_energysaver: true
+managedmac::authorization::allow_datetime: true
+managedmac::authorization::allow_timemachine: true
+managedmac::authorization::allow_printers: true
+managedmac::authorization::allow_dvd_initial: true
+managedmac::activedirectory::enable: true
+managedmac::activedirectory::hostname: ad1.apple.com
+managedmac::activedirectory::username: Administrator
+managedmac::activedirectory::password: password
+managedmac::activedirectory::create_mobile_account_at_login: true
+managedmac::activedirectory::warn_user_before_creating_ma: false
+managedmac::activedirectory::force_home_local: true
+managedmac::activedirectory::organizational_unit: "CN=Computers,DC=myorganization,DC=net"
+managedmac::mobileconfigs::defaults:
+  description:  'Installed by Puppet.'
+  organization: 'My Organization'
+managedmac::mobileconfigs::payloads:
+  'com.apple.Safari':
+    content:
+      HomePage: 'http://www.google.com/'
+      NewWindowBehavior: '0'
+      PayloadType: 'com.apple.Safari'
+    displayname: 'Managed Mac: Safari Settings'
+  'ManagedInstalls':
+    content:
+      PayloadType: 'ManagedInstalls'
+      AppleSoftwareUpdatesOnly: false
+      SoftwareUpdateServerURL: "http://reposado/index.sucatalog"
+      SuppressUserNotification: false
+    displayname: 'Managed Mac: Managed Software Center Settings'
+  'com.grahamgilbert.sal':
+    content:
+      PayloadType: 'com.grahamgilbert.sal'
+      ServerURL: "http://sal/"
+      key: "akljsdflakjhjkahsdkjfhkaskjhdfkjhaskjdhfakjhskjhaskjdhf"
+    displayname: 'Managed Mac: Sal Preferences'
+managedmac::groups::defaults:
+  ensure: present
+managedmac::groups::accounts:
+  _lpadmin:
+    gid: 98
+    nestedgroups:
+      - everyone

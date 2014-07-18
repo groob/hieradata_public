@@ -1,0 +1,4 @@
+hieradata
+=========
+
+Hiera Data
