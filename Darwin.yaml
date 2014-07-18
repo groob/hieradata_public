@@ -1,10 +1,17 @@
 ---
+# in manifests/site.pp we specify hiera_include('classes')
+# hiera looks here for a list of classes to include for OS X machines.
+# since this data is missing from global.yaml, noly OS X machines will apply these settings.
+
 classes:
   - managedmac
   - profile::mcx_profile::wifi
   - profile::mac_settings::google_nosslsearch
   - profile::mac_settings::ipv6off
   - profile::mac_settings::wifi_proxy
+
+# below are variables needed by the classes above.
+
 profile::mcx_profile::wifi::ssid: "WifiSSID"
 profile::mcx_profile::wifi::password: "password"
 profile::mac_settings::wifi_proxy::autoproxyurl: "http://proxy/proxy.pac"
@@ -46,6 +53,9 @@ managedmac::activedirectory::create_mobile_account_at_login: true
 managedmac::activedirectory::warn_user_before_creating_ma: false
 managedmac::activedirectory::force_home_local: true
 managedmac::activedirectory::organizational_unit: "CN=Computers,DC=myorganization,DC=net"
+
+# below is one way to create Profiles which are installed when puppet runs. 
+
 managedmac::mobileconfigs::defaults:
   description:  'Installed by Puppet.'
   organization: 'My Organization'
